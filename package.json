@@ -10,7 +10,7 @@
     "build": "node build/build.js"
   },
   "dependencies": {
-    "three": "^0.87.1",
+    "three": "^0.88.0",
     "vue": "^2.5.2",
     "vue-router": "^3.0.1"
   },

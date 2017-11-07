@@ -1,16 +1,17 @@
 <template>
-  <section class="home">
-    <button>FB Connect</button>
-  </section>
 </template>
 
 <script>
+import WebGL from 'webgl';
 export default {
   name: 'home',
   data() {
     return {
-      msg: 'Hello world'
+      webgl: null
     };
+  },
+  mounted() {
+    this.webgl = new WebGL();
   }
 };
 </script>
