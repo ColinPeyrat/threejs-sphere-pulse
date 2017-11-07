@@ -1,7 +1,7 @@
 {
-  "name": "data-interactive-story",
+  "name": "webgl-boilerplate",
   "version": "1.0.0",
-  "description": "A Gobelins school project",
+  "description": "",
   "author": "Colin Peyrat <contact@colin-peyrat.com>",
   "private": true,
   "scripts": {
