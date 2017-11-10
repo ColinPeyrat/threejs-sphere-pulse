@@ -1,0 +1,19 @@
+/* ==========================================================================
+   #ELEMENTS
+   ========================================================================== */
+
+html {
+  overflow-y: scroll;
+  min-height: 100%;
+  box-sizing: border-box;
+}
+
+*, *::before, *::after {
+  box-sizing: inherit;
+  transform-origin: 50% 50%;
+}
+
+body {
+  color: $text-color;
+  font: 1em / 1.5 $text-font-stack;
+}

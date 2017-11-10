@@ -10,12 +10,9 @@ export default {
 };
 </script>
 
+<style src="./styles/app.scss" lang="scss"></style>
 <style>
 .app {
-  font-family: Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  margin-top: 60px;
 }
 </style>
