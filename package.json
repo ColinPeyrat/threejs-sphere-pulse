@@ -10,6 +10,7 @@
     "build": "node build/build.js"
   },
   "dependencies": {
+    "dat.gui": "^0.6.1",
     "include-media": "^1.4.9",
     "normalize.css": "^7.0.0",
     "three": "^0.88.0",

@@ -8,12 +8,18 @@ html {
   box-sizing: border-box;
 }
 
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: inherit;
   transform-origin: 50% 50%;
 }
 
 body {
   color: $text-color;
-  font: 1em / 1.5 $text-font-stack;
+  font: 16px / 1.5 $text-font-stack;
+}
+
+canvas {
+  display: block;
 }

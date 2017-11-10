@@ -12,6 +12,7 @@ export default {
   },
   mounted() {
     this.webgl = new WebGL();
+    this.$el.appendChild(this.webgl.renderer.domElement);
   }
 };
 </script>
