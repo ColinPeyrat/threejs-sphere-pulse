@@ -27,8 +27,8 @@ class Main {
   animate() {
     requestAnimationFrame(this.animate.bind(this));
 
-    this.cube.rotation.x += 0.025;
-    this.cube.rotation.y += 0.025;
+    this.cube.rotation.x += 0.05;
+    this.cube.rotation.y += 0.05;
 
     this.renderer.render(this.scene, this.camera);
   }
