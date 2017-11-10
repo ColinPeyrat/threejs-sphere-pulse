@@ -16,7 +16,6 @@ class Main {
     };
 
     this.renderer = new THREE.WebGLRenderer();
-    this.renderer.setSize(window.innerWidth, window.innerHeight);
     const geometry = new THREE.BoxGeometry(1, 1, 1);
     const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
     this.cube = new THREE.Mesh(geometry, material);
@@ -24,14 +23,22 @@ class Main {
 
     this.camera.position.z = 5;
 
+    this.onWindowResize();
+    this.bindEvents();
     this.initGui();
 
     this.animate();
   }
 
-  initGui() {
-    console.log(GUI);
+  bindEvents() {
+    window.addEventListener('resize', this.onWindowResize.bind(this), false);
+  }
 
+  onWindowResize() {
+    this.renderer.setSize(window.innerWidth, window.innerHeight);
+  }
+
+  initGui() {
     const gui = new GUI();
     gui.add(this.params, 'cubeSpeed', 0.01, 0.1);
     return gui;
