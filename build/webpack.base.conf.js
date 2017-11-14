@@ -25,8 +25,7 @@ module.exports = {
     alias: {
       vue$: 'vue/dist/vue.esm.js',
       '@': resolve('src'),
-      shaders: path.resolve(__dirname, 'src/shaders'),
-      models: path.resolve(__dirname, 'src/models'),
+      shaders: resolve('src/shaders'),
       webgl: resolve('src/webgl')
     }
   },
@@ -65,6 +64,11 @@ module.exports = {
           limit: 10000,
           name: utils.assetsPath('fonts/[name].[hash:7].[ext]')
         }
+      },
+      {
+        test: /\.(glsl|frag|vert)$/,
+        loader: 'raw-loader',
+        exclude: /node_modules/
       }
     ]
   }

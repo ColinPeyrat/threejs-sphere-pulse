@@ -1,5 +1,7 @@
 import { GUI } from 'dat.gui/build/dat.gui.js';
 import * as THREE from 'three';
+import helloWorldVertex from 'shaders/helloWorld.vert';
+import helloWorldFragment from 'shaders/helloWorld.frag';
 
 class Main {
   constructor() {
@@ -15,9 +17,14 @@ class Main {
       cubeSpeed: 0.05
     };
 
-    this.renderer = new THREE.WebGLRenderer();
+    console.log(helloWorldFragment);
+
+    this.renderer = new THREE.WebGLRenderer({ antialias: true });
     const geometry = new THREE.BoxGeometry(1, 1, 1);
-    const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+    const material = new THREE.ShaderMaterial({
+      vertexShader: helloWorldVertex,
+      fragmentShader: helloWorldFragment
+    });
     this.cube = new THREE.Mesh(geometry, material);
     this.scene.add(this.cube);
 
@@ -35,6 +42,8 @@ class Main {
   }
 
   onWindowResize() {
+    this.camera.aspect = window.innerWidth / window.innerHeight;
+    this.camera.updateProjectionMatrix();
     this.renderer.setSize(window.innerWidth, window.innerHeight);
   }
 
