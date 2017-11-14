@@ -14,14 +14,18 @@ class Main {
     );
 
     this.params = {
-      cubeSpeed: 0.05
+      cubeSpeed: 0.02,
+      pulseSpeed: 0.025
     };
 
-    console.log(helloWorldFragment);
+    this.uniforms = {
+      u_time: { type: 'f', value: 1.0 }
+    };
 
     this.renderer = new THREE.WebGLRenderer({ antialias: true });
     const geometry = new THREE.BoxGeometry(1, 1, 1);
     const material = new THREE.ShaderMaterial({
+      uniforms: this.uniforms,
       vertexShader: helloWorldVertex,
       fragmentShader: helloWorldFragment
     });
@@ -50,11 +54,18 @@ class Main {
   initGui() {
     const gui = new GUI();
     gui.add(this.params, 'cubeSpeed', 0.01, 0.1);
+    gui.add(this.params, 'pulseSpeed', 0.01, 0.075);
     return gui;
   }
 
   animate() {
     requestAnimationFrame(this.animate.bind(this));
+
+    this.render();
+  }
+
+  render() {
+    this.uniforms.u_time.value += this.params.pulseSpeed;
 
     this.cube.rotation.x += this.params.cubeSpeed;
     this.cube.rotation.y += this.params.cubeSpeed;
