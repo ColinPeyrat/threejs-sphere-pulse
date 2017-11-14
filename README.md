@@ -1,6 +1,4 @@
-# data-interactive-story
-
-> A Gobelins school project
+# Three.js boilerplate
 
 ## Build Setup
 
