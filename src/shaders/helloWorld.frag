@@ -9,7 +9,7 @@ void main() {
 	vec2 position = vUv;
 
 	float red = position.x * abs(sin(u_time));
-  float green = position.y * abs(sin(u_time));
+  float green = position.y * abs(cos(u_time));
 
 	gl_FragColor = vec4(red,green,1.0,1.0);
 }
