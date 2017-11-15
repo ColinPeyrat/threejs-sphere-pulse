@@ -5,6 +5,9 @@ import helloWorldFragment from 'shaders/helloWorld.frag';
 
 class Main {
   constructor() {
+    this.frame = 0;
+
+    this.$el = document.getElementById('app');
     this.scene = new THREE.Scene();
     this.camera = new THREE.PerspectiveCamera(
       75,
@@ -19,26 +22,48 @@ class Main {
     };
 
     this.uniforms = {
-      u_time: { type: 'f', value: 1.0 }
+      u_time: { type: 'f', value: 1.0 },
+      u_amplitude: {
+        type: 'f',
+        value: 0
+      }
     };
 
     this.renderer = new THREE.WebGLRenderer({ antialias: true });
-    const geometry = new THREE.BoxGeometry(1, 1, 1);
+
     const material = new THREE.ShaderMaterial({
       uniforms: this.uniforms,
       vertexShader: helloWorldVertex,
       fragmentShader: helloWorldFragment
     });
-    this.cube = new THREE.Mesh(geometry, material);
-    this.scene.add(this.cube);
+
+    const geometry = new THREE.SphereBufferGeometry(1, 16, 16);
+    this.sphere = new THREE.Mesh(geometry, material);
+
+    this.displacement = new Float32Array(geometry.attributes.position.count);
+    this.populateDisplacementAttribute();
+    geometry.addAttribute(
+      'displacement',
+      new THREE.BufferAttribute(this.displacement, 1)
+    );
+
+    this.scene.add(this.sphere);
 
     this.camera.position.z = 5;
+
+    this.$el.appendChild(this.renderer.domElement);
 
     this.onWindowResize();
     this.bindEvents();
     this.initGui();
 
     this.animate();
+  }
+
+  populateDisplacementAttribute() {
+    for (var v = 0; v < this.displacement.length; v++) {
+      this.displacement[v] = Math.random() / 2;
+    }
   }
 
   bindEvents() {
@@ -66,9 +91,10 @@ class Main {
 
   render() {
     this.uniforms.u_time.value += this.params.pulseSpeed;
+    this.uniforms.u_amplitude.value = Math.sin(this.frame);
 
-    this.cube.rotation.x += this.params.cubeSpeed;
-    this.cube.rotation.y += this.params.cubeSpeed;
+    // update the frame counter
+    this.frame += 0.1;
 
     this.renderer.render(this.scene, this.camera);
   }
