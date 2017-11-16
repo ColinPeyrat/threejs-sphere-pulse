@@ -23,7 +23,7 @@ class Main {
       pulseSpeed: 0.05,
       displacementRange: 0.3,
       radius: 1,
-      segments: 16,
+      segments: 128,
       luminosity: 0.1
     };
 
