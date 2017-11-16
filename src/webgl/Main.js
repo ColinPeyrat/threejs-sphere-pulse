@@ -23,11 +23,16 @@ class Main {
       pulseSpeed: 0.05,
       displacementRange: 0.3,
       radius: 1,
-      segments: 16
+      segments: 16,
+      luminosity: 0
     };
 
     this.uniforms = {
       u_amplitude: {
+        type: 'f',
+        value: 0
+      },
+      u_luminosity: {
         type: 'f',
         value: 0
       }
@@ -97,6 +102,7 @@ class Main {
     gui
       .add(this.params, 'segments', 4, 512)
       .onChange(this.generateGeometry.bind(this));
+    gui.add(this.params, 'luminosity', 0, 0.5);
   }
 
   onDisplacementRange(value) {
@@ -137,6 +143,7 @@ class Main {
 
   render() {
     this.uniforms.u_amplitude.value = Math.sin(this.frame);
+    this.uniforms.u_luminosity.value = this.params.luminosity;
 
     // update the frame counter
     this.frame += this.params.pulseSpeed;

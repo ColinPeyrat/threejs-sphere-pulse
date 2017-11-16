@@ -9,6 +9,8 @@ precision mediump float;
  * runs from 0.0 to 1.0
  */
 
+uniform float u_luminosity;
+
 // same name and type as VS
 varying vec3 vNormal;
 
@@ -23,7 +25,7 @@ void main() {
 
 	 // calculate the dot product of
   // the light to the vertex normal
-  float dProd = max(0.0, dot(vNormal, light));
+  float dProd = max(u_luminosity, dot(vNormal, light));
  
   // feed into our frag colour
   gl_FragColor = vec4(dProd * 0.4, // R
