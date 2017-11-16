@@ -24,7 +24,7 @@ class Main {
       displacementRange: 0.3,
       radius: 1,
       segments: 16,
-      luminosity: 0
+      luminosity: 0.1
     };
 
     this.uniforms = {
