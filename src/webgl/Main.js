@@ -23,8 +23,7 @@ class Main {
       pulseSpeed: 0.05,
       displacementRange: 0.3,
       radius: 1,
-      widthSegments: 16,
-      heightSegments: 16
+      segments: 16
     };
 
     this.uniforms = {
@@ -42,7 +41,11 @@ class Main {
       fragmentShader: helloWorldFragment
     });
 
-    const geometry = new THREE.SphereBufferGeometry(1, 16, 16);
+    const geometry = new THREE.SphereBufferGeometry(
+      this.params.radius,
+      this.params.segments,
+      this.params.segments
+    );
     this.sphere = new THREE.Mesh(geometry, material);
 
     this.displacement = new Float32Array(geometry.attributes.position.count);
@@ -89,15 +92,11 @@ class Main {
       .add(this.params, 'displacementRange', 0, 2)
       .onChange(this.onDisplacementRange.bind(this));
     gui
-      .add(this.params, 'radius', 0.1, 2)
+      .add(this.params, 'radius', 0.1, 3)
       .onChange(this.generateGeometry.bind(this));
     gui
-      .add(this.params, 'widthSegments', 4, 256)
+      .add(this.params, 'segments', 4, 512)
       .onChange(this.generateGeometry.bind(this));
-    gui
-      .add(this.params, 'heightSegments', 4, 256)
-      .onChange(this.generateGeometry.bind(this));
-    return gui;
   }
 
   onDisplacementRange(value) {
@@ -109,8 +108,8 @@ class Main {
       this.sphere,
       new THREE.SphereBufferGeometry(
         this.params.radius,
-        this.params.widthSegments,
-        this.params.heightSegments
+        this.params.segments,
+        this.params.segments
       )
     );
   }
