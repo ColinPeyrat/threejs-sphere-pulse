@@ -1,5 +1,6 @@
 import { GUI } from 'dat.gui/build/dat.gui.js';
 import * as THREE from 'three';
+const OrbitControls = require('three-orbit-controls')(THREE);
 import helloWorldVertex from 'shaders/helloWorld.vert';
 import helloWorldFragment from 'shaders/helloWorld.frag';
 
@@ -15,6 +16,8 @@ class Main {
       0.1,
       1000
     );
+
+    this.controls = new OrbitControls(this.camera);
 
     this.params = {
       pulseSpeed: 0.05,
