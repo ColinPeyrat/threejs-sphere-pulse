@@ -17,12 +17,14 @@ class Main {
     );
 
     this.params = {
-      cubeSpeed: 0.02,
-      pulseSpeed: 0.025
+      pulseSpeed: 0.05,
+      displacementRange: 0.3,
+      radius: 1,
+      widthSegments: 16,
+      heightSegments: 16
     };
 
     this.uniforms = {
-      u_time: { type: 'f', value: 1.0 },
       u_amplitude: {
         type: 'f',
         value: 0
@@ -41,6 +43,7 @@ class Main {
     this.sphere = new THREE.Mesh(geometry, material);
 
     this.displacement = new Float32Array(geometry.attributes.position.count);
+
     this.populateDisplacementAttribute();
     geometry.addAttribute(
       'displacement',
@@ -62,7 +65,7 @@ class Main {
 
   populateDisplacementAttribute() {
     for (var v = 0; v < this.displacement.length; v++) {
-      this.displacement[v] = Math.random() / 2;
+      this.displacement[v] = Math.random() * this.params.displacementRange;
     }
   }
 
@@ -78,9 +81,50 @@ class Main {
 
   initGui() {
     const gui = new GUI();
-    gui.add(this.params, 'cubeSpeed', 0.01, 0.1);
-    gui.add(this.params, 'pulseSpeed', 0.01, 0.075);
+    gui.add(this.params, 'pulseSpeed', 0, 0.25);
+    gui
+      .add(this.params, 'displacementRange', 0, 2)
+      .onChange(this.onDisplacementRange.bind(this));
+    gui
+      .add(this.params, 'radius', 0.1, 2)
+      .onChange(this.generateGeometry.bind(this));
+    gui
+      .add(this.params, 'widthSegments', 4, 256)
+      .onChange(this.generateGeometry.bind(this));
+    gui
+      .add(this.params, 'heightSegments', 4, 256)
+      .onChange(this.generateGeometry.bind(this));
     return gui;
+  }
+
+  onDisplacementRange(value) {
+    this.populateDisplacementAttribute();
+  }
+
+  generateGeometry() {
+    this.updateGeometry(
+      this.sphere,
+      new THREE.SphereBufferGeometry(
+        this.params.radius,
+        this.params.widthSegments,
+        this.params.heightSegments
+      )
+    );
+  }
+
+  updateGeometry(mesh, geometry) {
+    mesh.geometry.dispose();
+
+    this.displacement = new Float32Array(geometry.attributes.position.count);
+
+    this.populateDisplacementAttribute();
+
+    geometry.addAttribute(
+      'displacement',
+      new THREE.BufferAttribute(this.displacement, 1)
+    );
+
+    mesh.geometry = geometry;
   }
 
   animate() {
@@ -90,13 +134,14 @@ class Main {
   }
 
   render() {
-    this.uniforms.u_time.value += this.params.pulseSpeed;
     this.uniforms.u_amplitude.value = Math.sin(this.frame);
 
     // update the frame counter
-    this.frame += 0.1;
+    this.frame += this.params.pulseSpeed;
 
     this.renderer.render(this.scene, this.camera);
+
+    this.sphere.geometry.attributes.displacement.needsUpdate = true;
   }
 }
 
